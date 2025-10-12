@@ -1,0 +1,59 @@
+/* Fondo y tipografía base */
+body {
+  font-family: 'Cinzel', serif;
+  color: #fdf5e6;
+  height: 100vh;
+  background: url('assets/fondo_madera.jpg') center/cover no-repeat fixed;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* Menú superior */
+.menu-superior {
+  background: rgba(50, 25, 10, 0.9);
+  border-bottom: 3px solid #3b1d0b;
+  padding: 10px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.menu-superior nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu-superior nav a {
+  text-decoration: none;
+  color: #fdf5e6;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.menu-superior nav a:hover {
+  color: #ffd700;
+}
+
+/* Contenido principal */
+main {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+/* Imagen de portada */
+.imagen-portada {
+  max-width: 90%;
+  max-height: 85%;
+  border: 6px solid #3b1d0b;
+  border-radius: 12px;
+  box-shadow: 0 0 25px rgba(0,0,0,0.5);
+  transition: transform 0.4s ease;
+}
+
+.imagen-portada:hover {
+  transform: scale(1.02);
+}

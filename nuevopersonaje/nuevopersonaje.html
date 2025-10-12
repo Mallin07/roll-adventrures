@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Nuevo Personaje - Rol Adventure</title>
+  <link rel="stylesheet" href="nuevopersonaje.css">
+</head>
+<body>
+
+  <!-- Barra superior -->
+  <header class="menu-superior">
+    <nav>
+      <ul>
+        <li><a href="principal.html">Inicio</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Cuerpo: 3 secciones -->
+  <main class="nuevo-personaje">
+    <h2>Elige una clase</h2>
+
+    <section class="clases-grid">
+      <!-- Cuerpo a Cuerpo -->
+      <article class="clase-card" data-clase="cuerpo">
+        <img src="assets/guerreros.png" alt="Cuerpo a Cuerpo" class="clase-img">
+        <h3>Cuerpo a Cuerpo</h3>
+        <p>Personajes como paladines o tanques, con una buena defensa y un ataque medio</p>
+        <button class="btn-elegir">Elegir clase</button>
+      </article>
+
+      <!-- Habilidoso -->
+      <article class="clase-card" data-clase="habilidoso">
+        <img src="assets/habiles.png" alt="Habilidoso" class="clase-img">
+        <h3>Habilidoso</h3>
+        <p>Personajes como arqueros o asesinos, poca defensa pero muy habilidosos y un ataque muy fuerte</p>
+        <button class="btn-elegir">Elegir clase</button>
+      </article>
+
+      <!-- Brujo -->
+      <article class="clase-card" data-clase="brujo">
+        <img src="assets/magos.png" alt="Brujo" class="clase-img">
+        <h3>Brujo</h3>
+        <p>Personajes como clerigos o brujos, alto dominio de la mágia</p>
+        <button class="btn-elegir">Elegir clase</button>
+      </article>
+    </section>
+
+    <p class="seleccion-info" id="seleccion-info">Ninguna clase seleccionada.</p>
+
+    <!-- 🔹 FORMULARIO DE NOMBRE (oculto hasta elegir clase) -->
+    <div id="form-nombre" class="form-nombre oculto">
+      <h3>Introduce el nombre de tu personaje</h3>
+      <input type="text" id="nombrePJ" placeholder="Ej.: Aramir" autocomplete="off" required>
+      <div class="botones-form">
+        <button id="guardarPJ" class="btn-elegir">Guardar personaje</button>
+        <a href="personajes/personajes.html" class="btn-volver">Cancelar</a>
+      </div>
+      <p id="errNombre" class="error"></p>
+    </div>
+
+  </main>
+
+
+
+  <script src="nuevopersonaje.js"></script>
+</body>
+</html>

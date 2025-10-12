@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hoja de Personaje</title>
+  <link rel="stylesheet" href="ficha.css">
+</head>
+<body>
+  <header class="menu-superior">
+    <nav>
+      <ul>
+        <li><a href="../principal.html">Inicio</a></li>
+        <li><a href="personajes.html">Personajes</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="sheet">
+    <section class="bio">
+      <h1 id="nombrePJ" contenteditable="true" spellcheck="false">Nombre del personaje</h1>
+      <h2 id="clasePJ" contenteditable="true" spellcheck="false">(Tipo de personaje)</h2>
+
+      <div class="stats">
+        <div class="stat-row">
+          <span>Nivel</span>
+          <div class="stat-controls" data-key="nivel">
+            <button class="minus">−</button>
+            <output>1</output>
+            <button class="plus">+</button>
+          </div>
+        </div>
+
+        <div class="stat-row"><span>Fuerza</span>
+          <div class="stat-controls" data-key="fuerza">
+            <button class="minus">−</button><output>2</output><button class="plus">+</button>
+          </div>
+        </div>
+        <div class="stat-row"><span>Defensa</span>
+          <div class="stat-controls" data-key="defensa">
+            <button class="minus">−</button><output>3</output><button class="plus">+</button>
+          </div>
+        </div>
+        <div class="stat-row"><span>Destreza</span>
+          <div class="stat-controls" data-key="destreza">
+            <button class="minus">−</button><output>1</output><button class="plus">+</button>
+          </div>
+        </div>
+        <div class="stat-row"><span>Sabiduría</span>
+          <div class="stat-controls" data-key="sabiduria">
+            <button class="minus">−</button><output>2</output><button class="plus">+</button>
+          </div>
+        </div>
+        <div class="stat-row"><span>Velocidad</span>
+          <div class="stat-controls" data-key="velocidad">
+            <button class="minus">−</button><output>2</output><button class="plus">+</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="elemental">
+        <h3>Ataque mágico</h3>
+        <ul>
+          <li>Fuego: <output id="atk-fuego">0</output></li>
+          <li>Agua: <output id="atk-agua">0</output></li>
+          <li>Tierra: <output id="atk-tierra">0</output></li>
+          <li>Aire: <output id="atk-aire">0</output></li>
+        </ul>
+        <h3>Defensa mágica</h3>
+        <ul>
+          <li>Fuego: <output id="def-fuego">0</output></li>
+          <li>Agua: <output id="def-agua">0</output></li>
+          <li>Tierra: <output id="def-tierra">0</output></li>
+          <li>Aire: <output id="def-aire">0</output></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="avatar">
+      <h3>Armas</h3>
+      <div class="slots slots--purple">
+        <div class="slot" data-slot="arma1" title="Arma 1"></div>
+        <div class="slot" data-slot="arma2" title="Arma 2"></div>
+      </div>
+
+      <div class="figure">
+        <!-- Partes clicables -->
+        <button class="part cabeza"        data-part="cabeza"        title="Cabeza"></button>
+        <button class="part cuerpo"        data-part="cuerpo"        title="Cuerpo"></button>
+        <button class="part bra-der"       data-part="brazo_d"       title="Brazo derecho"></button>
+        <button class="part bra-izq"       data-part="brazo_i"       title="Brazo izquierdo"></button>
+        <button class="part mano-der"      data-part="mano_d"        title="Mano derecha"></button>
+        <button class="part mano-izq"      data-part="mano_i"        title="Mano izquierda"></button>
+        <button class="part pierna-der"    data-part="pierna_d"      title="Pierna derecha"></button>
+        <button class="part pierna-izq"    data-part="pierna_i"      title="Pierna izquierda"></button>
+        <button class="part pie-der"       data-part="pie_d"         title="Pie derecho"></button>
+        <button class="part pie-izq"       data-part="pie_i"         title="Pie izquierdo"></button>
+      </div>
+
+      <h3>Equipo</h3>
+      <div class="slots slots--orange">
+        <div class="slot" data-slot="equipo1" title="Equipo 1"></div>
+        <div class="slot" data-slot="equipo2" title="Equipo 2"></div>
+        <div class="slot" data-slot="equipo2" title="Equipo 2"></div>
+      </div>
+
+      <h3>Habilidades</h3>
+      <div class="slots slots--blue">
+        <div class="slot" data-slot="hab1" title="Habilidad 1"></div>
+        <div class="slot" data-slot="hab2" title="Habilidad 2"></div>
+        <div class="slot" data-slot="hab3" title="Habilidad 3"></div>
+        <div class="slot" data-slot="hab4" title="Habilidad 4"></div>
+      </div>
+
+      <div class="tracks">
+        <div class="track">
+          <span>Vida</span>
+          <div class="pips" data-type="vida"></div>
+        </div>
+        <div class="track">
+          <span>Maná</span>
+          <div class="pips" data-type="mana"></div>
+        </div>
+        <div class="track">
+          <span>Hambre</span>
+          <div class="pips" data-type="hambre"></div>
+        </div>
+      </div>
+
+      <h3>Mochila</h3>
+      <div class="bag">
+        <!-- 3x3 -->
+        <div class="slot" data-slot="bag1"></div>
+        <div class="slot" data-slot="bag2"></div>
+        <div class="slot" data-slot="bag3"></div>
+        <div class="slot" data-slot="bag4"></div>
+        <div class="slot" data-slot="bag5"></div>
+        <div class="slot" data-slot="bag6"></div>
+        <div class="slot" data-slot="bag7"></div>
+        <div class="slot" data-slot="bag8"></div>
+        <div class="slot" data-slot="bag9"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="ficha.js"></script>
+</body>
+</html>
