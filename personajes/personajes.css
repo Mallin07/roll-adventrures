@@ -1,19 +1,29 @@
-/* ====== Base ====== */
-body {
-  font-family: 'Cinzel', serif;
-  color: #fdf5e6;
-  min-height: 100vh;
-  background: url('../assets/fondo_madera.jpg') center/cover no-repeat fixed;
-  display: flex;
-  flex-direction: column;
+:root {
+  --alto-menu: 56px; /* o el alto real de tu barra */
 }
 
-/* ====== Menú ====== */
+body {
+  margin: 0;
+  font-family: system-ui, Segoe UI, Roboto, sans-serif;
+  background: #f5efe3;
+  padding-top: var(--alto-menu); /* deja espacio para el header fijo */
+  color: #222;
+}
+
 .menu-superior {
-  background: rgba(50, 25, 10, 0.9);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--alto-menu);
+  z-index: 1000;
+  background: rgba(50, 25, 10, 1);
   border-bottom: 3px solid #3b1d0b;
-  padding: 10px 20px;
+  padding: 0 20px; /* quitamos el padding vertical */
   box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+
+  display: flex;             /* nuevo */
+  align-items: center;       /* centra verticalmente */
 }
 
 .menu-superior nav ul {
@@ -26,13 +36,11 @@ body {
   text-decoration: none;
   color: #fdf5e6;
   font-weight: bold;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   transition: color 0.3s;
 }
 
-.menu-superior nav a:hover {
-  color: #ffd700;
-}
+.menu-superior nav a:hover { color: #ffd700; }
 
 /* ====== Principal ====== */
 main {
@@ -75,19 +83,43 @@ main {
 }
 
 .personaje {
-  background: rgba(255, 255, 255, 0.15);
-  border: 2px solid #3b1d0b;
-  border-radius: 10px;
-  padding: 10px 20px;
-  width: 80%;
-  max-width: 600px;
-  text-align: center;
-  color: #9b1111; /* texto más visible */
-  font-size: 1.2rem;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.4);
-  transition: transform 0.2s;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255,255,255,1);
+  border: 1px solid rgba(255,255,255,1);
+  border-radius: 8px;
+  padding: 10px 50px;
+  margin-bottom: 20px;
+  transition: background 0.2s ease;
+}
+.personaje:hover {
+  background: rgba(255,255,255,1);
 }
 
-.personaje:hover {
-  transform: scale(1.03);
+.personaje .info {
+  display: flex;
+  flex-direction: column;
+}
+.personaje .nombre {
+  font-weight: 600;
+  color: #f09307;
+}
+.personaje .clase {
+  color: #138ee0;
+  font-size: 0.9rem;
+}
+
+.btn-borrar {
+  cursor: pointer;
+  border: none;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font-size: 1rem;
+  background: rgba(180,30,30,1);
+  color: #fff;
+  transition: all 0.2s ease;
+}
+.btn-borrar:hover {
+  background: rgba(230,50,50,1);
 }

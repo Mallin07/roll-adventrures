@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Juego de Rol</title>
+  <link rel="stylesheet" href="partida.css" />
+</head>
+<body>
+
+  <!-- Menú superior -->
+  <header class="menu-superior">
+    <nav>
+      <ul>
+        <li><a href="../index.html" id="btn-home">Juego</a></li>
+        <li><a href="../personajes/personajes.html" id="btn-personajes">Personajes</a></li>
+        <li><a href="../poblado/poblado.html" id="btn-poblado">Poblado</a></li>
+        <li><a href="partida.html" id="btn-partida">Partida</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Contenido principal -->
+  <main id="contenido">
+  <div>
+    <button id="pasarTurno">Pasar turno</button>
+    <div id="turnoMsg" class="mensaje-turno"></div>
+  </div>
+
+    <section class="dados">
+  <h3>Lanzar dados</h3>
+
+<div class="dado-config">
+  <label for="cantidadDados">Cantidad:</label>
+  <select id="cantidadDados" class="ui-select">
+    <option>1</option><option>2</option><option>3</option><option>4</option>
+    <option>5</option><option>6</option><option>7</option><option>8</option>
+    <option>9</option><option>10</option>
+  </select>
+
+  <label for="dificultad">Dificultad:</label>
+  <select id="dificultad" class="ui-select">
+    <option value="facil">Fácil</option>
+    <option value="normal" selected>Normal</option>
+    <option value="dificil">Difícil</option>
+    <option value="imposible">Imposible</option>
+  </select>
+
+  <button id="btn-dado" class="btn btn--primary">🎲 Lanzar</button>
+</div>
+
+
+
+  <div class="dado-slots">
+    <div class="dado-slot"></div>
+    <div class="dado-slot"></div>
+    <div class="dado-slot"></div>
+    <div class="dado-slot"></div>
+    <div class="dado-slot"></div>
+    <div class="dado-slot"></div>
+    <div class="dado-slot"></div>
+    <div class="dado-slot"></div>
+    <div class="dado-slot"></div>
+    <div class="dado-slot"></div>
+  </div>
+</section>
+
+<section class="reloj-dia">
+  <h3>Ciclo del día</h3>
+
+  <div class="reloj-contenedor">
+    <img src="assets/reloj.png" class="reloj-base" alt="Reloj del día">
+    <div class="flecha"></div>
+  </div>
+</section>
+
+</main>
+
+  
+
+  
+
+  <script type="module" src="../personajes/ficha.js"></script>
+
+  <script defer>
+    // Si pasarTurnoTodos existe, asegúrate de que esté en window:
+    if (typeof window.pasarTurnoTodos === "undefined" && typeof pasarTurnoTodos === "function") {
+      window.pasarTurnoTodos = pasarTurnoTodos;
+    }
+  </script>
+
+ <script src="partida.js"></script>
+
+
+</body>
+</html>

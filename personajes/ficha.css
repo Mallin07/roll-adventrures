@@ -1,11 +1,51 @@
-*{box-sizing:border-box} body{margin:0;font-family:system-ui,Segoe UI,Roboto,sans-serif;background:#f5efe3;color:#222}
-.menu-superior{background:#3a2416;color:#fff;padding:10px 16px;border-bottom:3px solid #2b180e}
-.menu-superior ul{margin:0;padding:0;list-style:none;display:flex;gap:12px}
-.menu-superior a{color:#fff;text-decoration:none;font-weight:700}
-.menu-superior a:hover{color:#ffd36b}
+*{box-sizing:border-box}
+:root {
+  --alto-menu: 56px; /* o el alto real de tu barra */
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, Segoe UI, Roboto, sans-serif;
+  background: #f5efe3;
+  padding-top: var(--alto-menu); /* deja espacio para el header fijo */
+  color: #222;
+}
+
+.menu-superior {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--alto-menu);
+  z-index: 1000;
+  background: rgba(50, 25, 10, 1);
+  border-bottom: 3px solid #3b1d0b;
+  padding: 0 20px; /* quitamos el padding vertical */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+
+  display: flex;             /* nuevo */
+  align-items: center;       /* centra verticalmente */
+}
+
+.menu-superior nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu-superior nav a {
+  text-decoration: none;
+  color: #fdf5e6;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.menu-superior nav a:hover { color: #ffd700; }
 
 .sheet{display:grid;grid-template-columns: 360px 1fr;gap:20px;max-width:1200px;margin:18px auto;padding:0 16px}
-h1{font-size:1.6rem;margin:.2rem 0} h2{font-size:1rem;margin:0 0 .6rem;color:#555}
+h1{font-size:1.6rem;margin:.2rem 0}
+h2{font-size:1rem;margin:0 0 .6rem;color:#555}
 
 /* panel izquierdo */
 .bio{background:#fff;border:2px solid #cdb59b;border-radius:12px;padding:14px;box-shadow:0 4px 16px rgba(0,0,0,.06)}
@@ -25,25 +65,25 @@ h1{font-size:1.6rem;margin:.2rem 0} h2{font-size:1rem;margin:0 0 .6rem;color:#55
 /* panel derecho */
 .avatar h3{margin:.5rem 0}
 .slots{display:flex;gap:10px;margin-bottom:8px}
-.slot{width:64px;height:64px;border:3px solid #6b6b6b;border-radius:10px;background:#f5f5f5 center/cover no-repeat;cursor:pointer;box-shadow:inset 0 0 0 2px rgba(0,0,0,.03)}
+.slot{width:64px;height:64px;border:3px solid #6b6b6b;border-radius:10px;background:#f5f5f5 center/cover no-repeat;cursor:pointer;box-shadow:inset 0 0 0 2px rgba(0,0,0,.03); transition:filter .15s ease}
 .slots--purple .slot{border-color:#7e55d5}
 .slots--orange .slot{border-color:#d58a42}
 .slots--blue .slot{border-color:#1f7bd9}
 .slot:hover{filter:brightness(.95)}
 
-.figure{position:relative;width:260px;height:320px;margin:10px 0;border:2px dashed #cdb59b;border-radius:12px;background:#fff}
+.figure{position:relative;width:250px;height:300px;margin:10px 0;border:2px dashed #cdb59b;border-radius:12px;background:#fff}
 .part{position:absolute;border:2px solid #8aa3b3;background:#f1f7fb;cursor:pointer;border-radius:6px}
 .part.injured{background:#e74c3c !important;border-color:#b12c20}
-.cabeza{top:10px;left:103px;width:54px;height:54px;border-radius:50%}
-.cuerpo{top:70px;left:80px;width:100px;height:90px}
-.bra-der{top:80px;left:185px;width:50px;height:20px}
-.bra-izq{top:80px;left:25px;width:50px;height:20px}
-.mano-der{top:104px;left:225px;width:22px;height:22px;border-radius:50%}
-.mano-izq{top:104px;left:8px;width:22px;height:22px;border-radius:50%}
+.cabeza{top:10px;left:90px;width:54px;height:54px;border-radius:50%}
+.cuerpo{top:70px;left:80px;width:80px;height:90px}
+.bra-der{top:80px;left:165px;width:25px;height:80px}
+.bra-izq{top:80px;left:50px;width:25px;height:80px}
+.mano-der{top:165px;left:165px;width:22px;height:22px;border-radius:50%}
+.mano-izq{top:165px;left:50px;width:22px;height:22px;border-radius:50%}
 .pierna-der{top:165px;left:120px;width:30px;height:90px}
 .pierna-izq{top:165px;left:90px;width:30px;height:90px}
-.pie-der{top:255px;left:142px;width:36px;height:18px;border-radius:10px}
-.pie-izq{top:255px;left:62px;width:36px;height:18px;border-radius:10px}
+.pie-der{top:255px;left:120px;width:36px;height:18px;border-radius:10px}
+.pie-izq{top:255px;left:85px;width:36px;height:18px;border-radius:10px}
 
 .tracks{margin:10px 0 14px;display:grid;gap:10px}
 .track{display:flex;align-items:center;gap:10px}
@@ -52,5 +92,66 @@ h1{font-size:1.6rem;margin:.2rem 0} h2{font-size:1rem;margin:0 0 .6rem;color:#55
 .pip.vida.active{background:#e74c3c;border-color:#b12c20}
 .pip.mana.active{background:#3b82f6;border-color:#205ccf}
 .pip.hambre.active{background:#22c55e;border-color:#15803d}
+.pip.sueno.active{background:#cbdf18;border-color:#798510}
 
 .bag{display:grid;grid-template-columns:repeat(3, 64px);gap:10px}
+
+/* =========================================================
+   NUEVO: Menú contextual (Ver / Mover / Eliminar)
+   =======================================================*/
+.ctxmenu{
+  position:fixed; z-index:9999;
+  background:#fff; border:2px solid #cdb59b; border-radius:10px;
+  box-shadow:0 8px 24px rgba(0,0,0,.15);
+  padding:6px; min-width:180px
+}
+.ctxmenu button{
+  display:block; width:100%; text-align:left;
+  background:#fff; border:0; padding:8px 10px;
+  border-radius:8px; font-weight:600; cursor:pointer
+}
+.ctxmenu button:hover{background:#f6efe5}
+
+/* =========================================================
+   NUEVO: Modal “Ver objeto”
+   =======================================================*/
+.modal.hidden{display:none}
+.modal{position:fixed; inset:0; z-index:9998}
+.modal__backdrop{position:absolute; inset:0; background:rgba(0,0,0,.45)}
+.modal__window{
+  position:relative; margin:6vh auto 0; max-width:560px; width:92%;
+  background:#fff; border:2px solid #cdb59b; border-radius:14px;
+  box-shadow:0 12px 40px rgba(0,0,0,.2); overflow:hidden
+}
+.modal__header{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:10px 12px; background:#f5efe3; border-bottom:2px solid #e6d8c6
+}
+.modal__close{border:0; background:transparent; font-size:24px; line-height:1; cursor:pointer}
+.modal__body{padding:12px}
+.modal__img{
+  display:none; max-width:100%; border-radius:10px; margin:6px 0 10px;
+  background:#f5f5f5
+}
+.modal__text{
+  white-space:pre-wrap;
+  font-family:ui-monospace, SFMono-Regular, Menlo, monospace;
+  background:#faf7f2; border:1px solid #eadfcf; border-radius:8px;
+  padding:10px; margin:0
+}
+.modal__footer{padding:10px 12px; display:flex; justify-content:flex-end; gap:8px}
+.modal__btn{
+  background:#3a2416; color:#fff; border:0; padding:8px 12px; border-radius:8px; cursor:pointer
+}
+.modal__btn:hover{background:#2b180e}
+
+/* =========================================================
+   NUEVO: Indicadores de “modo mover”
+   =======================================================*/
+.slot.is-move-source{outline:3px solid #22c55e; outline-offset:2px}
+.slot.is-move-target{outline:3px dashed #22c55e; outline-offset:2px}
+
+/* Accesibilidad mínima */
+@media (prefers-reduced-motion: reduce){
+  .slot{transition:none}
+}

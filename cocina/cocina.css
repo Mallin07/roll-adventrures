@@ -1,0 +1,123 @@
+/* ===== Reset ===== */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+/* ===== Variables y base ===== */
+:root {
+  --slot-size: 48px;
+  --gap: 6px;
+}
+
+body { 
+  font-family: 'Cinzel', serif; 
+  color: #fdf5e6; 
+  background: url('assets/cocina.png') center top / cover no-repeat fixed; 
+}
+
+/* ===== Menú superior ===== */
+.menu-superior {
+  position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+  background: rgba(50, 25, 10, 1); border-bottom: 3px solid #3b1d0b;
+  padding: 10px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+.menu-superior nav ul { list-style: none; display:flex; gap:20px; margin:0; padding:0; }
+.menu-superior nav a { text-decoration:none; color:#fdf5e6; font-weight:700; font-size:1.05rem; }
+.menu-superior nav a:hover { color:#ffd700; }
+
+/* ===== Main ===== */
+main {
+  min-height: 100vh;
+  padding: 120px 16px 48px;
+  display: flex; flex-direction: column; gap: 28px; align-items: center;
+}
+
+.section { width: max-content; margin: 0 auto; }
+h2 { margin: 6px 0 12px; font: 600 18px/1.2 system-ui, sans-serif; color: #ffdba6; }
+
+/* ===== Slots ===== */
+.slots {
+  display: inline-grid;
+  width: fit-content; height: fit-content;
+  gap: var(--gap);
+  padding: 8px;
+  background: rgba(255,255,255,1);
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 10px;
+  grid-template-columns: repeat(var(--cols, 20), var(--slot-size));
+  grid-template-rows:    repeat(var(--rows, 4),  var(--slot-size));
+}
+/* Caja que contiene los slots (Ingrediente / Resultado) */
+.box {
+  padding: 10px;
+  background: #3a2416;                  /* Marrón oscuro */
+  border: 2px solid #d4b48c;            /* Borde dorado claro */
+  border-radius: 10px;
+  box-shadow: 0 3px 8px rgba(0,0,0,.3);
+}
+
+/* Título de la caja */
+.box-title {
+  font: 600 14px/1 system-ui, sans-serif;
+  color: #ffdba6;
+  margin-bottom: 8px;
+  text-shadow: 0 1px 1px rgba(0,0,0,.4);
+}
+
+/* Slots individuales */
+.slot {
+  width: var(--slot-size);
+  height: var(--slot-size);
+  background: #fffdf7;                  /* Blanco cálido */
+  border: 2px solid #8b5e34;            /* Borde marrón medio */
+  border-radius: 8px;
+  cursor: pointer;
+  background-size: cover;
+  background-position: center;
+  transition: transform .15s, box-shadow .15s;
+}
+.slot:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 6px rgba(255, 215, 150, .6);
+}
+
+/* Slot bloqueado */
+.slot.is-locked {
+  opacity: 0.6;
+  filter: grayscale(1);
+  box-shadow: inset 0 0 0 2px rgba(255,255,255,.15);
+}
+
+/* Caja con hover general */
+.box:hover {
+  border-color: #ffcc7a;
+  box-shadow: 0 0 10px rgba(255,220,150,0.4);
+}
+/* ===== Cocina layout ===== */
+.cocina-wrapper {
+  display: grid;
+  grid-template-columns: 1fr auto; /* ingredientes crecen, resultado estrecho */
+  gap: 18px;
+  align-items: start;
+}
+.box {
+  padding: 10px;
+  background: rgba(50, 25, 10, 1);
+  border: 1px solid rgb(255, 255, 255);
+  border-radius: 10px;
+}
+.box-title {
+  font: 600 14px/1 system-ui, sans-serif;
+  color: #ffdba6;
+  margin-bottom: 8px;
+}
+
+/* Responsive */
+@media (max-width: 780px){
+  :root { --slot-size: 40px; }
+  .cocina-wrapper { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px){
+  :root { --slot-size: 34px; }
+}

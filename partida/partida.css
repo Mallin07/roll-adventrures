@@ -1,0 +1,226 @@
+/* ------------------Fondo y tipografía base---------------------------- */
+body {
+  font-family: 'Cinzel', serif;
+  color: #fdf5e6;
+  height: 100vh;
+  background: url('assets/fondo_madera.jpg') center/cover no-repeat fixed;
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* ------------------Menú superior----------------------------------- */
+.menu-superior {
+  background: rgba(50, 25, 10, 0.9);
+  border-bottom: 3px solid #3b1d0b;
+  padding: 10px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+.menu-superior nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu-superior nav a {
+  text-decoration: none;
+  color: #fdf5e6;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.menu-superior nav a:hover {
+  color: #ffd700;
+}
+
+/* -----------------------Contenido principal------------------------ */
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;   /* <- apila verticalmente */
+  justify-content: flex-start;
+  align-items: center;      /* o flex-start si no quieres centrar horizontalmente */
+  gap: 2rem;                /* <- separación vertical entre hijos */
+  padding: 20px;
+}
+
+
+/*--------------------------Boton pasar turno------------------------------ */
+#pasarTurno {
+  background-color: #2d6a4f;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1.1em;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+#pasarTurno:hover {
+  background-color: #40916c;
+}
+
+.mensaje-turno {
+  margin-top: 10px;
+  font-size: 0.9em;
+  color: #2d6a4f;
+}
+
+/* -------------------Dados----------------------------------- */
+:root{
+  --bg:#0f1115;
+  --surface:#1a1f2b;
+  --surface-2:#23293a;
+  --text:#e9ecf1;
+  --muted:#0e0e0f;
+  --brand:#7c5cff;       /* lila */
+  --brand-2:#5a8bff;     /* azul */
+  --ring:#9aa8ff55;
+  --danger:#ff5e6a;
+  --warning:#ffb255;
+  --success:#33d17a;
+}
+
+/* contenedor de controles */
+.dado-config{
+  margin: 1rem 0 .5rem;
+  display:flex;
+  gap:.6rem;
+  flex-wrap:wrap;
+  align-items:center;
+  color:var(--muted);
+}
+.dado-config label{
+  font-size:1.3rem;
+  opacity:.9;
+}
+
+/* botones */
+.btn{
+  --shadow: 0 8px 20px rgba(0,0,0,.25);
+  appearance:none;
+  border:none;
+  border-radius:12px;
+  padding:.55rem .9rem;
+  font:600 0.95rem/1.1 system-ui, -apple-system, Segoe UI, Roboto, "Helvetica Neue", Arial;
+  color:var(--text);
+  background:var(--surface-2);
+  box-shadow:var(--shadow);
+  cursor:pointer;
+  transition: transform .08s ease, box-shadow .2s ease, background .2s ease, opacity .2s;
+}
+.btn:active{ transform: translateY(1px) scale(0.99); }
+.btn:disabled{ opacity:.6; cursor:not-allowed; }
+
+/* primario con degradé */
+.btn--primary{
+  background: linear-gradient(135deg, var(--brand) 0%, var(--brand-2) 100%);
+  box-shadow: 0 10px 24px rgba(92, 111, 255, .35);
+}
+.btn--primary:hover{ filter: brightness(1.05); }
+.btn--primary:focus-visible{
+  outline: none;
+  box-shadow: 0 0 0 3px var(--ring), 0 10px 24px rgba(92,111,255,.35);
+}
+
+/* secundario/ghost */
+.btn--ghost{
+  background: transparent;
+  border:1px solid rgba(255,255,255,.14);
+}
+.btn--ghost:hover{ background: rgba(255,255,255,.06); }
+.btn--ghost:focus-visible{
+  outline:none;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+.dados h3,
+.dados-titulo {
+  color: #053b2b;
+  text-shadow: 0 0 10px #ffd76a55;
+  font-family: 'Cinzel', serif;
+}
+
+/* selects */
+.ui-select{
+  appearance: none;
+  border:1px solid rgba(255,255,255,.14);
+  background: var(--surface);
+  color:var(--text);
+  border-radius:12px;
+  padding:.45rem .9rem;
+  font-size:1rem;
+  outline:none;
+  box-shadow: 0 6px 16px rgba(0,0,0,.24);
+  transition: box-shadow .2s, border-color .2s, background .2s;
+}
+.ui-select:hover{ border-color: rgba(255,255,255,.22); }
+.ui-select:focus-visible{
+  border-color: transparent;
+  box-shadow: 0 0 0 3px var(--ring);
+}
+
+/* slots: un poco más “chips” */
+.dado-slots{
+  margin-top:.75rem;
+  display:flex; flex-wrap:wrap; gap:.5rem; justify-content:flex-start;
+}
+.dado-slot{
+  width:46px; height:46px;
+  background:#151821;
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  font-weight:800; font-size:1.1rem;
+  color:#7b84a6;
+  transition: transform .18s ease, box-shadow .25s ease, border-color .25s ease, color .25s ease, background .25s ease;
+}
+.dado-slot.filled{
+  border-color:#ffd76a7a;
+  background: #10131b;
+}
+
+/* realce por color de dificultad */
+.roll-red    { color: var(--danger);  box-shadow: 0 0 0 2px rgba(255,94,106,.18), 0 6px 16px rgba(255,94,106,.28) inset; }
+.roll-orange { color: var(--warning); box-shadow: 0 0 0 2px rgba(255,178,85,.18), 0 6px 16px rgba(255,178,85,.24) inset; }
+.roll-green  { color: var(--success); box-shadow: 0 0 0 2px rgba(51,209,122,.18), 0 6px 16px rgba(51,209,122,.24) inset; }
+.roll-purple { color: var(--brand);   box-shadow: 0 0 0 2px rgba(124,92,255,.22), 0 6px 16px rgba(124,92,255,.28) inset; }
+
+
+/* -------------------------reloj-------------------------- */
+.reloj-dia {
+  margin-top: 3rem;
+  text-align: center;
+  color: #fdf5e6;
+  font-family: 'Cinzel', serif;
+}
+
+.reloj-contenedor {
+  position: relative;
+  width: 260px;
+  height: 260px;
+  margin: auto;
+}
+
+.reloj-base {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  display: block;
+}
+
+.flecha {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 6px;
+  height: 115px;
+  background: #ffd700;
+  transform-origin: bottom center;
+  transform: translate(-50%, -100%) rotate(0deg);
+  border-radius: 4px;
+  transition: transform 0.6s ease;
+}

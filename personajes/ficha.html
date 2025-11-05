@@ -10,8 +10,10 @@
   <header class="menu-superior">
     <nav>
       <ul>
-        <li><a href="../principal.html">Inicio</a></li>
-        <li><a href="personajes.html">Personajes</a></li>
+        <li><a href="../index.html" id="btn-juego">Juego</a></li>
+        <li><a href="../personajes/personajes.html" id="btn-personajes">Personajes</a></li>
+        <li><a href="../poblado/poblado.html" id="btn-personajes">Poblado</a></li>
+        <li><a href="../partida/partida.html" id="btn-juego">Partida</a></li>
       </ul>
     </nav>
   </header>
@@ -22,38 +24,29 @@
       <h2 id="clasePJ" contenteditable="true" spellcheck="false">(Tipo de personaje)</h2>
 
       <div class="stats">
-        <div class="stat-row">
-          <span>Nivel</span>
-          <div class="stat-controls" data-key="nivel">
-            <button class="minus">−</button>
-            <output>1</output>
-            <button class="plus">+</button>
-          </div>
-        </div>
-
         <div class="stat-row"><span>Fuerza</span>
           <div class="stat-controls" data-key="fuerza">
-            <button class="minus">−</button><output>2</output><button class="plus">+</button>
+            <output>2</output>
           </div>
         </div>
         <div class="stat-row"><span>Defensa</span>
           <div class="stat-controls" data-key="defensa">
-            <button class="minus">−</button><output>3</output><button class="plus">+</button>
+            <output>3</output>
           </div>
         </div>
         <div class="stat-row"><span>Destreza</span>
           <div class="stat-controls" data-key="destreza">
-            <button class="minus">−</button><output>1</output><button class="plus">+</button>
+            <output>1</output>
           </div>
         </div>
         <div class="stat-row"><span>Sabiduría</span>
           <div class="stat-controls" data-key="sabiduria">
-            <button class="minus">−</button><output>2</output><button class="plus">+</button>
+            <output>2</output>
           </div>
         </div>
         <div class="stat-row"><span>Velocidad</span>
           <div class="stat-controls" data-key="velocidad">
-            <button class="minus">−</button><output>2</output><button class="plus">+</button>
+            <output>2</output>
           </div>
         </div>
       </div>
@@ -101,7 +94,7 @@
       <div class="slots slots--orange">
         <div class="slot" data-slot="equipo1" title="Equipo 1"></div>
         <div class="slot" data-slot="equipo2" title="Equipo 2"></div>
-        <div class="slot" data-slot="equipo2" title="Equipo 2"></div>
+        <div class="slot" data-slot="equipo3" title="Equipo 3"></div>
       </div>
 
       <h3>Habilidades</h3>
@@ -110,6 +103,12 @@
         <div class="slot" data-slot="hab2" title="Habilidad 2"></div>
         <div class="slot" data-slot="hab3" title="Habilidad 3"></div>
         <div class="slot" data-slot="hab4" title="Habilidad 4"></div>
+      </div>
+      <div class="slots slots--blue">
+        <div class="slot" data-slot="hab5" title="Habilidad 5"></div>
+        <div class="slot" data-slot="hab6" title="Habilidad 6"></div>
+        <div class="slot" data-slot="hab7" title="Habilidad 7"></div>
+        <div class="slot" data-slot="hab8" title="Habilidad 8"></div>
       </div>
 
       <div class="tracks">
@@ -124,6 +123,10 @@
         <div class="track">
           <span>Hambre</span>
           <div class="pips" data-type="hambre"></div>
+        </div>
+        <div class="track">
+          <span>Sueño</span>
+          <div class="pips" data-type="sueno"></div>
         </div>
       </div>
 
@@ -143,6 +146,26 @@
     </section>
   </main>
 
-  <script src="ficha.js"></script>
+  <!-- ===== Modal “Ver objeto” ===== -->
+  <div id="itemModal" class="modal hidden" aria-hidden="true">
+    <div class="modal__backdrop" data-close-modal></div>
+    <div class="modal__window" role="dialog" aria-modal="true" aria-labelledby="itemModalTitle">
+      <header class="modal__header">
+        <h3 id="itemModalTitle">Objeto</h3>
+        <button class="modal__close" title="Cerrar" data-close-modal>&times;</button>
+      </header>
+      <div class="modal__body">
+        <img id="itemModalImg" alt="" class="modal__img" />
+        <pre id="itemModalText" class="modal__text"></pre>
+      </div>
+      <footer class="modal__footer">
+        <button class="modal__btn" data-close-modal>Cerrar</button>
+      </footer>
+    </div>
+  </div>
+  <!-- ===== /Modal ===== -->
+
+  <script type="module" src="../firebase.js"></script>
+  <script type="module" src="ficha.js"></script>
 </body>
 </html>

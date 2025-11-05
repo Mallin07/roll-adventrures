@@ -1,0 +1,107 @@
+/* Reset útil (opcional, por si acaso) */
+html, body { margin: 0; padding: 0; box-sizing: border-box; }
+*, *::before, *::after { box-sizing: inherit; }
+
+/* Fondo y tipografía base (lo tuyo) */
+body {
+  font-family: 'Cinzel', serif;
+  color: #fdf5e6;
+  /* height: 100vh;  <-- quítalo */
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+
+
+
+/* Menú superior (lo tuyo) */
+.menu-superior {
+  position: fixed;         /* se mantiene fijo en la parte superior */
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;           /* asegura que quede por encima del resto */
+  background: rgba(50, 25, 10, 1);  /* color sólido o semitransparente */
+  border-bottom: 3px solid #3b1d0b;
+  padding: 10px 20px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+}
+
+
+.menu-superior nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+.menu-superior nav a {
+  text-decoration: none;
+  color: #fdf5e6;
+  font-weight: bold;
+  font-size: 1.2rem;
+  transition: color 0.3s;
+}
+
+.menu-superior nav a:hover { color: #ffd700; }
+
+/* Contenedor principal preparado para superponer */
+/* Contenedor principal: usa la portada como fondo */
+main {
+  background: url('assets/general.png') center top / cover no-repeat fixed;
+  min-height: 100vh;
+  padding-top: 140px;
+  padding-bottom: 8vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Botonera: columna centrada */
+.botonera {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* centra horizontalmente */
+  gap: 18px;                /* separación vertical uniforme */
+}
+
+/* Cada botón es una imagen clicable con tamaño propio */
+.botonera a {
+  display: block;
+}
+
+.botonera img {
+  height: auto;             /* alturas diferentes, sin deformar */
+  display: block;
+  /* tamaño responsive: ajusta el ancho por imagen si quieres */
+  max-width: min(60vw, 420px);
+  width: auto;
+}
+
+/* Si prefieres controlar el tamaño por botón,
+   puedes dar clases y fijar anchos distintos: */
+/*
+.b1 img { max-width: 460px; }
+.b2 img { max-width: 380px; }
+...
+*/
+
+/* Responsive simple */
+@media (max-width: 768px) {
+  main {
+    min-height: 70vh;
+    padding-top: 12vh;
+    padding-bottom: 6vh;
+  }
+  .botonera { gap: 14px; }
+  .botonera img { max-width: 72vw; }
+}
+
+@media (max-width: 768px) {
+  body.poblado {
+    background-attachment: scroll;
+    background-repeat: repeat-y;      /* evita cortes si no hay fixed */
+    background-size: 100% auto;       /* encaja al ancho */
+  }
+}
