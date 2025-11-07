@@ -64,6 +64,7 @@ main { padding-top: calc(var(--header-h) + 16px); }
 main {
   flex: 1;
   display: flex;
+  margin-top: 50px;
   flex-direction: column;   /* <- apila verticalmente */
   justify-content: flex-start;
   align-items: center;      /* o flex-start si no quieres centrar horizontalmente */
@@ -219,7 +220,7 @@ main {
 .reloj-dia {
   margin-top: 3rem;
   text-align: center;
-  color: #fdf5e6;
+  color: #0b531d;
   font-family: 'Cinzel', serif;
 }
 
