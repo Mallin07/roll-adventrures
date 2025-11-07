@@ -25,33 +25,37 @@ function getPersonajes(){ return JSON.parse(localStorage.getItem('personajes') |
 const pj = getPersonajes().find(p => p.id === PJ_ID);
 
 /* =========================================================================
-   Bases / defaults por clase
+   Bases / defaults por clase (oficiales + alias)
    =======================================================================*/
 const BASE_BY_CLASS = {
-  cuerpo:      { fuerza:4, defensa:3, destreza:1, sabiduria:1, velocidad:2 }, // melee / guerrero
-  brujo:       { fuerza:1, defensa:1, destreza:2, sabiduria:4, velocidad:2 }, // mago/clérigo
-  habilidoso:  { fuerza:2, defensa:2, destreza:4, sabiduria:1, velocidad:3 }, // pícaro/arquero
+  Guerrero: { fuerza:4, defensa:3, destreza:1, sabiduria:1, velocidad:2 },
+  Mago:     { fuerza:1, defensa:1, destreza:2, sabiduria:4, velocidad:2 },
+  Picaro:   { fuerza:2, defensa:2, destreza:4, sabiduria:1, velocidad:3 },
+  Aventurero: { fuerza:2, defensa:3, destreza:1, sabiduria:2, velocidad:2 },
 };
-const DEFAULT_STATE = { fuerza:2, defensa:3, destreza:1, sabiduria:2, velocidad:2 };
+const DEFAULT_STATE = BASE_BY_CLASS.Aventurero;
 
-function baseForClass(clase){ return BASE_BY_CLASS?.[clase] || DEFAULT_STATE; }
+// Mapa de alias + normalización (incluye tildes)
+function toOfficialClassName(raw){
+  const plain = String(raw || '')
+    .normalize('NFD').replace(/\p{Diacritic}/gu,'') // quita tildes
+    .trim().toLowerCase();
 
-function defaultFichaFor(meta){
-  const on10 = () => Array.from({length:10}, ()=>true);
-  const clase = meta?.clase || pj?.clase || "Aventurero";
-  return {
-    nombre: meta?.nombre || pj?.nombre || "Personaje",
-    clase,
-    state: {
-      ...baseForClass(clase),
-      elemental:{ atk:{fuego:0,agua:0,tierra:0,aire:0}, def:{fuego:0,agua:0,tierra:0,aire:0} },
-      mods:{ fuerza:0, defensa:0, destreza:0, sabiduria:0, velocidad:0 }
-    },
-    injured: [],
-    pips: { vida: on10(), mana: on10(), hambre: on10(), sueno: on10() },
-    slots: {},
-    counters: { noFoodTurns: 0 },
+  const map = {
+    'guerrero': 'Guerrero',
+    'mago': 'Mago',
+    'picaro': 'Picaro',
+    'aventurero': 'Aventurero',
+    'cuerpo': 'Guerrero',      // alias antiguos
+    'brujo': 'Mago',
+    'habilidoso': 'Picaro',
   };
+  return map[plain] || 'Aventurero';
+}
+
+function baseForClass(clase){
+  const official = toOfficialClassName(clase);
+  return BASE_BY_CLASS[official] || DEFAULT_STATE;
 }
 
 /* =========================================================================
@@ -965,3 +969,5 @@ window.addEventListener('storage', (e) => {
 });
 
 });
+
+ 

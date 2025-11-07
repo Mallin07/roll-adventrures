@@ -124,11 +124,22 @@ if (window.__PJS_INIT__) {
 
   /* ========= creación (opcional con prompts) ========= */
   function normalizeClase(c){
-    return String(c || "")
-      .replace(/^\s*\(/, "")
-      .replace(/\)\s*$/, "")
-      .trim() || "Aventurero";
-  }
+  const plain = String(c || "")
+    .replace(/^\s*\(/, "").replace(/\)\s*$/, "")
+    .normalize('NFD').replace(/\p{Diacritic}/gu,'') // Pícaro -> Picaro
+    .trim().toLowerCase();
+
+  const map = {
+    'guerrero': 'Guerrero',
+    'mago': 'Mago',
+    'picaro': 'Picaro',
+    'cuerpo': 'Guerrero',      // alias antiguos
+    'brujo': 'Mago',
+    'habilidoso': 'Picaro',
+    'aventurero': 'Aventurero'
+  };
+  return map[plain] || 'Aventurero';
+}
   function baseForClass(clase){
     const BASE_BY_CLASS = {
       Guerrero: { fuerza:4, defensa:3, destreza:1, sabiduria:1, velocidad:2 },
@@ -139,7 +150,7 @@ if (window.__PJS_INIT__) {
     return BASE_BY_CLASS?.[clase] || DEFAULT_STATE;
   }
   function defaultFichaFor(pj){
-    const off10 = () => Array.from({length:10}, ()=>false);
+    const on10 = () => Array.from({length:10}, ()=>true);
     const clase = normalizeClase(pj?.clase || "Aventurero");
     return {
       nombre: (pj?.nombre || "Personaje").trim(),
@@ -150,7 +161,7 @@ if (window.__PJS_INIT__) {
         mods:{ fuerza:0, defensa:0, destreza:0, sabiduria:0, velocidad:0 }
       },
       injured: [],
-      pips: { vida: off10(), mana: off10(), hambre: off10() },
+      pips: { vida: off10(), mana: off10(), hambre: off10(), sueno: on10() },
       slots: {}
     };
   }
