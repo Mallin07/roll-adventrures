@@ -11,37 +11,56 @@ body {
   color: #222;
 }
 
-.menu-superior {
+/* ---------------------------------Menú superior--------------------------------------- */
+:root { --header-h: 64px; } /* ajusta a tu alto real */
+
+
+.menu-superior{
   position: fixed;
   top: 0;
-  left: 0;
-  width: 100%;
-  height: var(--alto-menu);
+  left: 50%;
+  width: 100vw;                 /* SIEMPRE ocupa el viewport */
+  transform: translateX(-50%);  /* ignora el ancho del contenedor padre */
   z-index: 1000;
-  background: rgba(50, 25, 10, 1);
-  border-bottom: 3px solid #3b1d0b;
-  padding: 0 20px; /* quitamos el padding vertical */
-  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
 
-  display: flex;             /* nuevo */
-  align-items: center;       /* centra verticalmente */
+  background: rgba(50, 25, 10, 0.9);
+  border-bottom: 3px solid #3b1d0b;
+  padding: calc(10px + env(safe-area-inset-top)) 20px 10px
+           calc(20px + env(safe-area-inset-left)); /* notch friendly */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
 }
 
-.menu-superior nav ul {
+/* Contenido del nav centrado y adaptable */
+.menu-superior nav{
+  max-width: 1200px;   /* opcional: límite interno de contenido */
+  margin: 0 auto;
+}
+.menu-superior nav ul{
   list-style: none;
   display: flex;
   gap: 20px;
+  flex-wrap: wrap;          /* si no cabe, baja a otra línea */
+  align-items: center;
+  justify-content: center;  /* centrado horizontal */
+  margin: 0;
+  padding: 0;
 }
-
-.menu-superior nav a {
+.menu-superior nav a{
   text-decoration: none;
   color: #fdf5e6;
-  font-weight: bold;
+  font-weight: 700;
   font-size: 1.2rem;
-  transition: color 0.3s;
+  transition: color .3s;
 }
+.menu-superior nav a:hover{ color:#ffd700; }
 
-.menu-superior nav a:hover { color: #ffd700; }
+/* Evita desbordes horizontales y despeja el header fijo */
+html, body { overflow-x: hidden; margin: 0; }
+main { padding-top: calc(var(--header-h) + 16px); }
+
+.menu-superior nav a:hover {
+  color: #ffd700;
+}
 
 .sheet{display:grid;grid-template-columns: 360px 1fr;gap:20px;max-width:1200px;margin:18px auto;padding:0 16px}
 h1{font-size:1.6rem;margin:.2rem 0}

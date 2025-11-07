@@ -16,15 +16,56 @@ body {
   background: url('assets/cocina.png') center top / cover no-repeat fixed; 
 }
 
-/* ===== Menú superior ===== */
-.menu-superior {
-  position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
-  background: rgba(50, 25, 10, 1); border-bottom: 3px solid #3b1d0b;
-  padding: 10px 20px; box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+/* ---------------------------------Menú superior--------------------------------------- */
+:root { --header-h: 64px; } /* ajusta a tu alto real */
+
+
+.menu-superior{
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 100vw;                 /* SIEMPRE ocupa el viewport */
+  transform: translateX(-50%);  /* ignora el ancho del contenedor padre */
+  z-index: 1000;
+
+  background: rgba(50, 25, 10, 0.9);
+  border-bottom: 3px solid #3b1d0b;
+  padding: calc(10px + env(safe-area-inset-top)) 20px 10px
+           calc(20px + env(safe-area-inset-left)); /* notch friendly */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
 }
-.menu-superior nav ul { list-style: none; display:flex; gap:20px; margin:0; padding:0; }
-.menu-superior nav a { text-decoration:none; color:#fdf5e6; font-weight:700; font-size:1.05rem; }
-.menu-superior nav a:hover { color:#ffd700; }
+
+/* Contenido del nav centrado y adaptable */
+.menu-superior nav{
+  max-width: 1200px;   /* opcional: límite interno de contenido */
+  margin: 0 auto;
+}
+.menu-superior nav ul{
+  list-style: none;
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;          /* si no cabe, baja a otra línea */
+  align-items: center;
+  justify-content: center;  /* centrado horizontal */
+  margin: 0;
+  padding: 0;
+}
+.menu-superior nav a{
+  text-decoration: none;
+  color: #fdf5e6;
+  font-weight: 700;
+  font-size: 1.2rem;
+  transition: color .3s;
+}
+.menu-superior nav a:hover{ color:#ffd700; }
+
+/* Evita desbordes horizontales y despeja el header fijo */
+html, body { overflow-x: hidden; margin: 0; }
+main { padding-top: calc(var(--header-h) + 16px); }
+
+.menu-superior nav a:hover {
+  color: #ffd700;
+}
 
 /* ===== Main ===== */
 main {
