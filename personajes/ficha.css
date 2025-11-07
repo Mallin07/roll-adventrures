@@ -1,65 +1,47 @@
 *{box-sizing:border-box}
-:root { --header-h: 64px; } /* una sola variable para header y padding-top */
-
-html, body { margin: 0; overflow-x: hidden; }
-
-body {
-  font-family: system-ui, Segoe UI, Roboto, sans-serif;
-  background: #f5efe3;
-  color: #222;
-  padding-top: var(--header-h); /* despeja el header fijo */
+:root {
+  --alto-menu: 56px; /* o el alto real de tu barra */
 }
 
-/* Header fijo, “full-bleed” correcto sin 100vw */
-.menu-superior{
+body {
+  margin: 0;
+  font-family: system-ui, Segoe UI, Roboto, sans-serif;
+  background: #f5efe3;
+  padding-top: var(--alto-menu); /* deja espacio para el header fijo */
+  color: #222;
+}
+
+.menu-superior {
   position: fixed;
   top: 0;
   left: 0;
-  right: 0;                 /* en vez de width:100vw + translate */
+  width: 100%;
+  height: var(--alto-menu);
   z-index: 1000;
-
-  background: rgba(50, 25, 10, 0.9);
+  background: rgba(50, 25, 10, 1);
   border-bottom: 3px solid #3b1d0b;
+  padding: 0 20px; /* quitamos el padding vertical */
   box-shadow: 0 4px 10px rgba(0,0,0,0.4);
 
-  padding: calc(10px + env(safe-area-inset-top)) 20px 10px
-           calc(20px + env(safe-area-inset-left));
+  display: flex;             /* nuevo */
+  align-items: center;       /* centra verticalmente */
 }
 
-/* Contenido centrado y con el mismo ancho que el main */
-.menu-superior nav,
-main{
-  max-width: 1200px;     /* mismo límite para ambos */
-  margin: 0 auto;
-  padding-inline: 16px;  /* respiración lateral */
-}
-
-/* Menú */
-.menu-superior nav ul{
+.menu-superior nav ul {
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
   gap: 20px;
-  align-items: center;
-  justify-content: center;
-  margin: 0;
-  padding: 0;
 }
-.menu-superior nav a{
+
+.menu-superior nav a {
   text-decoration: none;
   color: #fdf5e6;
-  font-weight: 700;
+  font-weight: bold;
   font-size: 1.2rem;
-  transition: color .3s;
-}
-.menu-superior nav a:hover{ color:#ffd700; }
-
-/* Responsive */
-@media (max-width: 480px){
-  :root { --header-h: 56px; }
-  .menu-superior nav a{ font-size: 1rem; }
+  transition: color 0.3s;
 }
 
+.menu-superior nav a:hover { color: #ffd700; }
 
 .sheet{display:grid;grid-template-columns: 360px 1fr;gap:20px;max-width:1200px;margin:18px auto;padding:0 16px}
 h1{font-size:1.6rem;margin:.2rem 0}
@@ -172,9 +154,4 @@ h2{font-size:1rem;margin:0 0 .6rem;color:#555}
 /* Accesibilidad mínima */
 @media (prefers-reduced-motion: reduce){
   .slot{transition:none}
-}
-
-@media (max-width: 480px){
-  :root { --header-h: 56px; }
-  .menu-superior nav a{ font-size: 1rem; }
 }
