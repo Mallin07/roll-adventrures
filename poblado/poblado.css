@@ -126,3 +126,8 @@ main {
     background-size: 100% auto;       /* encaja al ancho */
   }
 }
+
+@media (max-width: 480px){
+  :root { --header-h: 56px; }
+  .menu-superior nav a{ font-size: 1rem; }
+}

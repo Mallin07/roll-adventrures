@@ -174,3 +174,8 @@ h2{font-size:1rem;margin:0 0 .6rem;color:#555}
 @media (prefers-reduced-motion: reduce){
   .slot{transition:none}
 }
+
+@media (max-width: 480px){
+  :root { --header-h: 56px; }
+  .menu-superior nav a{ font-size: 1rem; }
+}

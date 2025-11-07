@@ -186,3 +186,8 @@ dialog::backdrop { background: rgba(0,0,0,.45); }
   from { opacity: 0; transform: translateY(15px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+@media (max-width: 480px){
+  :root { --header-h: 56px; }
+  .menu-superior nav a{ font-size: 1rem; }
+}

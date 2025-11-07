@@ -142,3 +142,8 @@ main {
 .btn-borrar:hover {
   background: rgba(230,50,50,1);
 }
+
+@media (max-width: 480px){
+  :root { --header-h: 56px; }
+  .menu-superior nav a{ font-size: 1rem; }
+}

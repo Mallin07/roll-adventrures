@@ -249,3 +249,8 @@ main {
   border-radius: 4px;
   transition: transform 0.6s ease;
 }
+
+@media (max-width: 480px){
+  :root { --header-h: 56px; }
+  .menu-superior nav a{ font-size: 1rem; }
+}

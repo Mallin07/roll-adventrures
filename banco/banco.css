@@ -225,3 +225,8 @@ html, body, main { overflow-x: hidden; }
 @media (max-width: 680px) {
   .track-x { padding: 0 8px 10px; column-gap: 20px; }
 }
+
+@media (max-width: 480px){
+  :root { --header-h: 56px; }
+  .menu-superior nav a{ font-size: 1rem; }
+}
