@@ -56,6 +56,7 @@ h2 {
   margin: 6px 0 12px;
   font: 600 18px/1.2 system-ui, sans-serif;
   color: #ffdba6;
+  text-align: center;
 }
 
 /* ===== Grids de slots ===== */
@@ -107,21 +108,76 @@ h2 {
 
 
 /* ----------------------------scroll------------------------- */
-.scroll-x {
-  overflow-x: auto;       /* ← activamos el scroll */
-  padding-bottom: 8px;    /* opcional, para que no tape el borde */
-  max-width: 100%;        /* no rebase la pantalla */
-  display: block;
-  scrollbar-color: #c8a36d rgba(0,0,0,0.25); /* opcional, estilo scrollbar */
+/* ===== Banco paginado (3 páginas 4x4) ===== */
+.bank-pager {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  max-width: min(100vw - 24px, 760px); /* ancho visible */
+  margin: 0 auto;                 /* que el bloque se centre */
+  justify-content: center;
 }
 
-.scroll-x::-webkit-scrollbar {
-  height: 8px; /* tamaño de la barra en horizontal */
+.bank-viewport {
+  overflow: hidden;
+  position: relative;
 }
-.scroll-x::-webkit-scrollbar-thumb {
-  background: #c8a36d;
-  border-radius: 4px;
+
+.bank-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  transition: transform .25s ease;
+  will-change: transform;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
 }
+
+.bank-page {
+  display: flex;
+  justify-content: center;        /* ← centra el grid */
+  align-items: center;
+  padding: 8px 0;
+}
+
+/* Reusa tus estilos .slots, pero en 4x4 */
+.bank-page .slots {
+  display: inline-grid;
+  grid-template-columns: repeat(4, var(--slot-size));
+  grid-template-rows: repeat(4, var(--slot-size));
+  gap: var(--gap);
+}
+
+/* Flechas */
+.pager-btn {
+  appearance: none;
+  border: 0;
+  border-radius: 10px;
+  width: 40px; height: 40px;
+  font: 700 22px/1 system-ui, sans-serif;
+  color: #2b1608;
+  background: #ffdba6;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  transition: transform .1s ease, opacity .2s ease;
+}
+.pager-btn:disabled { opacity: .45; cursor: default; }
+.pager-btn:active { transform: scale(.96); }
+
+/* Dots */
+.pager-dots {
+  margin-top: 8px;
+  text-align: center;
+}
+.pager-dots button {
+  width: 8px; height: 8px; border-radius: 999px;
+  border: 0; margin: 0 4px; background: #a37b49; opacity: .5;
+}
+.pager-dots button.is-active { opacity: 1; background: #ffdba6; }
+
+/* Evitar scroll horizontal del documento */
+html, body, main { overflow-x: hidden; }
 
 
 /* =====-------------------------- Responsive ===------------------------== */
@@ -134,4 +190,8 @@ h2 {
 @media (max-width: 680px) {
   :root { --slot-size: 32px; }
   .menu-superior nav a { font-size: .95rem; }
+}
+
+@media (max-width: 680px) {
+  .track-x { padding: 0 8px 10px; column-gap: 20px; }
 }

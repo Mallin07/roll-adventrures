@@ -1,4 +1,7 @@
-// banco.js
+// banco.js (actualizado)
+// Banco paginado en 3 páginas de 4x4 (48 slots), con flechas y swipe.
+// La Mochila sigue centrada debajo y mantiene su grid 3x3.
+
 import { loadFichaFS, saveFichaFS, loadBancoFS, saveBancoFS, storage } from "../firebase.js";
 
 /* ========= utils DOM ========= */
@@ -50,14 +53,20 @@ async function loadNombrePJ() {
   } catch {}
 }
 
-/* ========= build grid (única) ========= */
+/* ========= Config Banco paginado ========= */
+const BANK_PAGES = 3;
+const PAGE_ROWS  = 4;
+const PAGE_COLS  = 4;
+const SLOTS_PER_PAGE = PAGE_ROWS * PAGE_COLS; // 16
+const BANK_MAX = BANK_PAGES * SLOTS_PER_PAGE; // 48
+
+/* ========= build grid (para Mochila) ========= */
 function buildGrid(container){
   if (!container) return [];
   const rows = Number(container.dataset.rows || 4);
   const cols = Number(container.dataset.cols || 20);
   const prefix = (container.dataset.prefix || 'slot').trim();
 
-  // Exponer filas/columnas al CSS para que la caja se adapte
   container.style.setProperty('--rows', rows);
   container.style.setProperty('--cols', cols);
 
@@ -68,7 +77,27 @@ function buildGrid(container){
     for (let c=0;c<cols;c++){
       const d = document.createElement('div');
       d.className = 'slot';
-      d.dataset.slot = `${prefix}${idx++}`; // bank1.., bag1..
+      d.dataset.slot = `${prefix}${idx++}`; // bank1.. o bag1..
+      d.title = '';
+      frag.appendChild(d);
+      els.push(d);
+    }
+  }
+  container.innerHTML = '';
+  container.appendChild(frag);
+  return els;
+}
+
+/* ========= build grid con offset (para Banco paginado) ========= */
+function buildGridWithOffset(container, prefix, rows, cols, startIndex){
+  const els = [];
+  const frag = document.createDocumentFragment();
+  let idx = startIndex;
+  for (let r=0;r<rows;r++){
+    for (let c=0;c<cols;c++){
+      const d = document.createElement('div');
+      d.className = 'slot';
+      d.dataset.slot = `${prefix}${idx++}`;
       d.title = '';
       frag.appendChild(d);
       els.push(d);
@@ -114,8 +143,8 @@ function buildItemTooltip(d){
 }
 
 /* ========= estado ========= */
-const bankSlots = {}; // bank1..bank80 => item|null
-const bagSlots  = {}; // bag1..bag9    => item|null (3x3)
+const bankSlots = {}; // bank1..bankN => item|null
+const bagSlots  = {}; // bag1..bag9   => item|null (3x3)
 
 /* ========= pintar slot ========= */
 async function paintSlot(el, item){
@@ -139,7 +168,7 @@ async function loadAll(){
   if (bankDoc && bankDoc.slots) {
     Object.entries(bankDoc.slots).forEach(([k,v])=>{ bankSlots[k] = v || null; });
   }
-  // Mochila: leer ficha y quedarnos con keys bag*
+  // Mochila
   const ficha = await loadFichaFS(PJ_ID);
   const allSlots = (ficha && ficha.slots) ? ficha.slots : {};
   Object.keys(allSlots).forEach(k=>{
@@ -225,18 +254,111 @@ async function onSlotClick(ev){
   if (fromCtx.type === 'bag'  || toCtx.type === 'bag')  await saveBagMergeToFicha();
 }
 
+/* ========= Banco paginado: UI ========= */
+function setupBankPager(){
+  const viewport = $('.bank-viewport');
+  const track    = $('.bank-track');
+  const btnPrev  = $('.pager-btn.prev');
+  const btnNext  = $('.pager-btn.next');
+  const dotsWrap = $('.pager-dots');
+
+  // construir páginas
+  const pagesEls = [];
+  const allSlotEls = [];
+  for (let p=0; p<BANK_PAGES; p++){
+    const page = document.createElement('div');
+    page.className = 'bank-page';
+    const grid = document.createElement('div');
+    grid.className = 'slots';
+    grid.classList.add('slots--bank');
+    page.appendChild(grid);
+    track.appendChild(page);
+    pagesEls.push(page);
+
+    const start = (p * SLOTS_PER_PAGE) + 1; // bank1, bank17, etc.
+    const els = buildGridWithOffset(grid, 'bank', PAGE_ROWS, PAGE_COLS, start);
+    allSlotEls.push(...els);
+  }
+
+  // Dots
+  dotsWrap.innerHTML = '';
+  const dots = [];
+  for (let i=0; i<BANK_PAGES; i++){
+    const b = document.createElement('button');
+    if (i===0) b.classList.add('is-active');
+    b.addEventListener('click', ()=> goPage(i));
+    dotsWrap.appendChild(b);
+    dots.push(b);
+  }
+
+  let page = 0;
+  function updateButtons(){
+    btnPrev.disabled = (page === 0);
+    btnNext.disabled = (page === BANK_PAGES - 1);
+    dots.forEach((d,i)=> d.classList.toggle('is-active', i===page));
+  }
+  function goPage(n){
+    page = Math.max(0, Math.min(BANK_PAGES-1, n));
+    track.style.transform = `translateX(${page * -100}%)`;
+    track.dataset.page = String(page);
+    updateButtons();
+  }
+
+  btnPrev.addEventListener('click', ()=> goPage(page-1));
+  btnNext.addEventListener('click', ()=> goPage(page+1));
+
+  // Swipe táctil
+  let startX = 0, startY = 0, swiping = false;
+  track.addEventListener('touchstart', e=>{
+    const t = e.touches[0]; startX = t.clientX; startY = t.clientY; swiping = false;
+  }, { passive: true });
+  track.addEventListener('touchmove', e=>{
+    const t = e.touches[0];
+    const dx = t.clientX - startX;
+    const dy = t.clientY - startY;
+    if (!swiping && Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 10) swiping = true;
+    if (swiping) e.preventDefault();
+  }, { passive: false });
+  track.addEventListener('touchend', e=>{
+    if (!swiping) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (dx < -40) goPage(page+1);
+    else if (dx > 40) goPage(page-1);
+  });
+
+  updateButtons();
+
+  return { allSlotEls, goPage };
+}
+
 /* ========= init ========= */
 (async function init(){
-  const elsBank = buildGrid($('#grid-banco')); // bank1..bank80 (4x20)
-  const elsBag  = buildGrid($('#grid-bag'));   // bag1..bag9 (3x3)
+  // --- BANCO paginado ---
+  const pager = setupBankPager();
+  const allBankEls = pager.allSlotEls;
 
   await loadNombrePJ();
   await loadAll();
 
-  // Pintar estado inicial
-  await Promise.all(elsBank.map(el => paintSlot(el, bankSlots[el.dataset.slot] || null)));
-  await Promise.all(elsBag.map(el  => paintSlot(el, bagSlots[el.dataset.slot]  || null)));
+  // Pintar los 48 slots visibles (3 páginas 4x4)
+  await Promise.all(allBankEls.map(el => paintSlot(el, bankSlots[el.dataset.slot] || null)));
 
-  // Enlazar clics
-  [...elsBank, ...elsBag].forEach(el => el.addEventListener('click', onSlotClick));
+  // Enlazar clics en banco
+  allBankEls.forEach(el => el.addEventListener('click', onSlotClick));
+
+  // --- MOCHILA (3x3) ---
+  const elsBag  = buildGrid($('#grid-bag'));   // bag1..bag9
+  await Promise.all(elsBag.map(el  => paintSlot(el, bagSlots[el.dataset.slot]  || null)));
+  elsBag.forEach(el => el.addEventListener('click', onSlotClick));
+
+  // Abrir página que contenga el primer item del banco (opcional)
+  const filledIdx = Object.keys(bankSlots)
+    .filter(k=>/^bank\d+$/i.test(k) && bankSlots[k])
+    .map(k=>parseInt(k.replace(/\D/g,''),10))
+    .filter(n=>n>=1 && n<=BANK_MAX)
+    .sort((a,b)=>a-b)[0];
+  if (filledIdx){
+    const targetPage = Math.floor((filledIdx-1)/SLOTS_PER_PAGE);
+    pager.goPage(targetPage);
+  }
 })();

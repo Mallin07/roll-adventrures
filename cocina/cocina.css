@@ -34,7 +34,13 @@ main {
 }
 
 .section { width: max-content; margin: 0 auto; }
-h2 { margin: 6px 0 12px; font: 600 18px/1.2 system-ui, sans-serif; color: #ffdba6; }
+
+h2 {
+  margin: 6px 0 12px;
+  font: 600 18px/1.2 system-ui, sans-serif;
+  color: #ffdba6;
+  text-align: center;
+}
 
 /* ===== Slots ===== */
 .slots {
@@ -113,6 +119,122 @@ h2 { margin: 6px 0 12px; font: 600 18px/1.2 system-ui, sans-serif; color: #ffdba
   margin-bottom: 8px;
 }
 
+/* ----------------------------banco------------------------- */
+/* ===== Banco paginado (3 páginas 4x4) ===== */
+.bank-pager {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 10px;
+  max-width: min(100vw - 24px, 760px); /* ancho visible */
+  margin: 0 auto;                 /* que el bloque se centre */
+  justify-content: center;
+}
+
+.bank-viewport {
+  overflow: hidden;
+  position: relative;
+}
+
+.bank-track {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: 100%;
+  transition: transform .25s ease;
+  will-change: transform;
+  touch-action: pan-x;
+  -webkit-overflow-scrolling: touch;
+}
+
+.bank-page {
+  display: flex;
+  justify-content: center;        /* ← centra el grid */
+  align-items: center;
+  padding: 8px 0;
+}
+
+/* Reusa tus estilos .slots, pero en 4x4 */
+.bank-page .slots {
+  display: inline-grid;
+  grid-template-columns: repeat(4, var(--slot-size));
+  grid-template-rows: repeat(4, var(--slot-size));
+  gap: var(--gap);
+}
+
+/* Flechas */
+.pager-btn {
+  appearance: none;
+  border: 0;
+  border-radius: 10px;
+  width: 40px; height: 40px;
+  font: 700 22px/1 system-ui, sans-serif;
+  color: #2b1608;
+  background: #ffdba6;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,.25);
+  transition: transform .1s ease, opacity .2s ease;
+}
+.pager-btn:disabled { opacity: .45; cursor: default; }
+.pager-btn:active { transform: scale(.96); }
+
+/* Dots */
+.pager-dots {
+  margin-top: 8px;
+  text-align: center;
+}
+.pager-dots button {
+  width: 8px; height: 8px; border-radius: 999px;
+  border: 0; margin: 0 4px; background: #a37b49; opacity: .5;
+}
+.pager-dots button.is-active { opacity: 1; background: #ffdba6; }
+
+/* Evitar scroll horizontal del documento */
+html, body, main { overflow-x: hidden; }
+
+
+/* ---------------------------------------Selección objeto--------------------------------- */
+.slot {
+  position: relative;
+  transition: transform .08s ease, box-shadow .2s ease, outline-color .2s ease;
+}
+
+/* Halo al pasar el ratón (sutil) */
+.slot:hover::after {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border: 2px solid rgba(255, 219, 166, .35);
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+/* Selección clara */
+.slot.is-selected {
+  transform: translateZ(0) scale(1.03);
+  box-shadow: 0 6px 14px rgba(0,0,0,.28);
+}
+.slot.is-selected::after {
+  content: "";
+  position: absolute;
+  inset: -3px;
+  border: 2px solid #66aaff;
+  border-radius: 8px;
+  box-shadow: 0 0 0 3px rgba(102,170,255,.35);
+  pointer-events: none;
+}
+
+/* (Opcional) bloqueo más visible en cocina */
+.slot.is-locked {
+  filter: grayscale(.3) brightness(.9);
+}
+.slot.is-locked::before {
+  content: "🔒";
+  position: absolute;
+  top: 2px; right: 4px;
+  font-size: 14px;
+  opacity: .9;
+}
+
 /* Responsive */
 @media (max-width: 780px){
   :root { --slot-size: 40px; }
@@ -120,4 +242,8 @@ h2 { margin: 6px 0 12px; font: 600 18px/1.2 system-ui, sans-serif; color: #ffdba
 }
 @media (max-width: 560px){
   :root { --slot-size: 34px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slot { transition: none; }
 }
