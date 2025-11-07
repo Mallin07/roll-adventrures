@@ -1,47 +1,47 @@
 *{box-sizing:border-box}
-:root {
-  --alto-menu: 56px; /* o el alto real de tu barra */
-}
+:root { --header-h: 64px; } /* una sola variable para header y padding-top */
+
+html, body { margin: 0; overflow-x: hidden; }
 
 body {
-  margin: 0;
   font-family: system-ui, Segoe UI, Roboto, sans-serif;
   background: #f5efe3;
-  padding-top: var(--alto-menu); /* deja espacio para el header fijo */
   color: #222;
+  padding-top: var(--header-h); /* despeja el header fijo */
 }
 
-/* ---------------------------------Menú superior--------------------------------------- */
-:root { --header-h: 64px; } /* ajusta a tu alto real */
-
-
+/* Header fijo, “full-bleed” correcto sin 100vw */
 .menu-superior{
   position: fixed;
   top: 0;
-  left: 50%;
-  width: 100vw;                 /* SIEMPRE ocupa el viewport */
-  transform: translateX(-50%);  /* ignora el ancho del contenedor padre */
+  left: 0;
+  right: 0;                 /* en vez de width:100vw + translate */
   z-index: 1000;
 
   background: rgba(50, 25, 10, 0.9);
   border-bottom: 3px solid #3b1d0b;
-  padding: calc(10px + env(safe-area-inset-top)) 20px 10px
-           calc(20px + env(safe-area-inset-left)); /* notch friendly */
   box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+
+  padding: calc(10px + env(safe-area-inset-top)) 20px 10px
+           calc(20px + env(safe-area-inset-left));
 }
 
-/* Contenido del nav centrado y adaptable */
-.menu-superior nav{
-  max-width: 1200px;   /* opcional: límite interno de contenido */
+/* Contenido centrado y con el mismo ancho que el main */
+.menu-superior nav,
+main{
+  max-width: 1200px;     /* mismo límite para ambos */
   margin: 0 auto;
+  padding-inline: 16px;  /* respiración lateral */
 }
+
+/* Menú */
 .menu-superior nav ul{
   list-style: none;
   display: flex;
+  flex-wrap: wrap;
   gap: 20px;
-  flex-wrap: wrap;          /* si no cabe, baja a otra línea */
   align-items: center;
-  justify-content: center;  /* centrado horizontal */
+  justify-content: center;
   margin: 0;
   padding: 0;
 }
@@ -54,9 +54,12 @@ body {
 }
 .menu-superior nav a:hover{ color:#ffd700; }
 
-.menu-superior nav a:hover {
-  color: #ffd700;
+/* Responsive */
+@media (max-width: 480px){
+  :root { --header-h: 56px; }
+  .menu-superior nav a{ font-size: 1rem; }
 }
+
 
 .sheet{display:grid;grid-template-columns: 360px 1fr;gap:20px;max-width:1200px;margin:18px auto;padding:0 16px}
 h1{font-size:1.6rem;margin:.2rem 0}
