@@ -1,4 +1,3 @@
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getFirestore, doc, setDoc, getDoc, collection, query, where, getDocs
@@ -7,8 +6,16 @@ import {
   getStorage, ref as sRef, getDownloadURL, uploadBytes
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-storage.js";
 import { getDatabase } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+// 👇 NUEVO: Auth
+import {
+  getAuth,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-// TU CONFIG (copia/pega la de la consola Firebase)
+// TU CONFIG
 const firebaseConfig = {
   apiKey: "AIzaSyAwAGqnbQUHZej6xoltfzjJp2svsHZ3rYU",
   authDomain: "roll-adventures.firebaseapp.com",
@@ -25,24 +32,24 @@ export const db = getFirestore(app);
 export const rtdb = getDatabase(app);
 export const storage = getStorage(app);
 
+// 👇 NUEVO: instancia de Auth
+export const auth = getAuth(app);
+
 // ====== Helpers FIRESTORE ======
 
-// Buscar item por nombre (colección 'items')
 export async function getItemByName(nombre) {
   const q = query(collection(db, "items"), where("name", "==", nombre.toLowerCase()));
   const snap = await getDocs(q);
   if (snap.empty) return null;
   const data = snap.docs[0].data();
-  return data; // { name, imageURL, mods, atk, def, ... }
+  return data;
 }
 
-// Guardar ficha por personaje (colección 'fichas', doc id = personajeId)
 export async function saveFichaFS(personajeId, payload) {
   if (!personajeId) throw new Error("saveFichaFS: personajeId requerido");
   await setDoc(doc(db, "fichas", personajeId), payload, { merge: true });
 }
 
-// Cargar ficha por personaje
 export async function loadFichaFS(personajeId) {
   if (!personajeId) throw new Error("loadFichaFS: personajeId requerido");
   const d = await getDoc(doc(db, "fichas", personajeId));
@@ -50,22 +57,27 @@ export async function loadFichaFS(personajeId) {
 }
 
 // ====== Helpers STORAGE (opcional) ======
-// Subir un archivo de imagen (Blob/File) a 'items/<nombreArchivo>'
 export async function uploadItemImage(file, nombreArchivo) {
   const ref = sRef(storage, `items/${nombreArchivo}`);
   await uploadBytes(ref, file);
   return await getDownloadURL(ref);
 }
 
-// Guarda el banco del personaje en 'bancos/{personajeId}'
 export async function saveBancoFS(personajeId, payload) {
   if (!personajeId) throw new Error("saveBancoFS: personajeId requerido");
   await setDoc(doc(db, "bancos", personajeId), payload, { merge: true });
 }
 
-// Carga el banco del personaje
 export async function loadBancoFS(personajeId) {
   if (!personajeId) throw new Error("loadBancoFS: personajeId requerido");
   const d = await getDoc(doc(db, "bancos", personajeId));
-  return d.exists() ? d.data() : null; // { slots: { bank1: {...}, bank2: null, ... } }
+  return d.exists() ? d.data() : null;
 }
+
+// 👇 OPCIONAL: re-exportar helpers de auth por comodidad
+export {
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
+};

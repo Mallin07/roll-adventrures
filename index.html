@@ -12,20 +12,41 @@
   <header class="menu-superior">
     <nav>
       <ul>
-        <li><a href="index.html" id="btn-juego">Juego</a></li>
+        <li><a href="index.html" id="btn-juego">Inicio</a></li>
         <li><a href="personajes/personajes.html" id="btn-personajes">Personajes</a></li>
         <li><a href="poblado/poblado.html" id="btn-personajes">Poblado</a></li>
         <li><a href="partida/partida.html" id="btn-juego">Partida</a></li>
       </ul>
     </nav>
+
+      <!-- Botón de cerrar sesión -->
+  <button id="btn-logout" class="btn-logout" style="display: none;">
+    Cerrar sesión
+  </button>
   </header>
 
   <!-- Contenido principal -->
   <main id="contenido">
-    <img src="assets/principal.png" alt="Portada Rol Adventure" class="imagen-portada">
-  </main>
+    <!-- Caja de login -->
+    <section class="login-container" id="login-container">
+      <h2>Acceso de jugador</h2>
 
-  <script src="main.js"></script>
-  <script type="module" src="firebase.js"></script>
+      <form id="login-form">
+        <label for="login-email">Correo electrónico</label>
+        <input type="email" id="login-email" required placeholder="tucorreo@ejemplo.com">
+
+        <label for="login-password">Contraseña</label>
+        <input type="password" id="login-password" required minlength="6" placeholder="Mínimo 6 caracteres">
+
+        <button type="submit">Entrar</button>
+        <button type="button" id="btn-register" class="secondary">Registrarme</button>
+
+        <p class="login-error" id="login-error"></p>
+        <p class="login-success" id="login-success"></p>
+      </form>
+    </section>
+
+  <!-- IMPORTANTE: solo un script, como módulo -->
+  <script type="module" src="main.js"></script>
 </body>
 </html>

@@ -60,6 +60,12 @@ main { padding-top: calc(var(--header-h) + 16px); }
   color: #ffd700;
 }
 
+.mensaje-bienvenida {
+  color: #d16a16; /* amarillo dorado, por ejemplo */
+  font-weight: 700;
+  text-shadow: 1px 1px 3px rgba(0,0,0,0.1);
+}
+
 /*---------------------------------------- Contenido principal------------------------------------------------ */
 main {
   flex: 1;
@@ -87,4 +93,127 @@ main {
 @media (max-width: 480px){
   :root { --header-h: 56px; }
   .menu-superior nav a{ font-size: 1rem; }
+}
+
+/* ---------------------- Caja de login ---------------------- */
+
+.login-container {
+  background: rgba(20, 10, 5, 0.9);
+  border: 2px solid #3b1d0b;
+  border-radius: 12px;
+  padding: 20px 24px;
+  max-width: 360px;
+  width: 100%;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+  margin-right: 20px;
+}
+
+.login-container h2 {
+  margin-top: 0;
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+#login-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+#login-form label {
+  font-size: 0.9rem;
+}
+
+#login-form input {
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid #3b1d0b;
+  background: #2b1508;
+  color: #fdf5e6;
+}
+
+#login-form input:focus {
+  outline: none;
+  border-color: #ffd700;
+}
+
+#login-form button {
+  margin-top: 8px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+}
+
+#login-form button[type="submit"] {
+  background: #8b4513;
+  color: #fdf5e6;
+}
+
+#login-form button.secondary {
+  background: #3b1d0b;
+  color: #fdf5e6;
+}
+
+#login-form button:hover {
+  opacity: 0.9;
+}
+
+.login-error {
+  color: #ff6b6b;
+  min-height: 1.2em;
+  font-size: 0.9rem;
+}
+
+.login-success {
+  color: #7CFC00;
+  min-height: 1.2em;
+  font-size: 0.9rem;
+}
+
+/* En móviles, que el login y la imagen se apilen */
+@media (max-width: 768px) {
+  main {
+    flex-direction: column;
+  }
+
+  .login-container {
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+}
+
+/* --------------------------- Botón cerrar sesión------------------- */
+.menu-superior{
+  position: fixed;
+  top: 0;
+  left: 50%;
+  width: 100vw;
+  transform: translateX(-50%);
+  z-index: 1000;
+
+  background: rgba(50, 25, 10, 0.9);
+  border-bottom: 3px solid #3b1d0b;
+  padding: calc(10px + env(safe-area-inset-top)) 20px 10px
+           calc(20px + env(safe-area-inset-left));
+  box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+
+  display: flex;               /* 👈 importante para alinear nav y botón */
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-logout {
+  background: #8b0000;
+  color: #fdf5e6;
+  border: 1px solid #3b1d0b;
+  border-radius: 8px;
+  padding: 6px 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-logout:hover {
+  opacity: 0.9;
 }
